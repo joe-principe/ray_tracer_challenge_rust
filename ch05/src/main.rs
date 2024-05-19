@@ -1,3 +1,5 @@
+mod ray;
+
 use minifb::{Key, Window, WindowOptions};
 extern crate nalgebra_glm as glm;
 
