@@ -1,31 +1,35 @@
 extern crate nalgebra_glm as glm;
 use glm::Vec3;
 
-struct Ray {
+pub struct Ray {
     origin: Vec3,
     direction: Vec3,
 }
 
 impl Ray {
-    fn new() -> Ray {
+    pub fn new() -> Ray {
         Ray {
             origin: glm::vec3(0.0, 0.0, 0.0),
-            direction: glm::vec3(0.0, 0.0, 0.0)
+            direction: glm::vec3(0.0, 0.0, 0.0),
         }
     }
 
-    fn build(o: Vec3, d: Vec3) -> Ray {
+    pub fn build(o: &Vec3, d: &Vec3) -> Ray {
         Ray {
-            origin: o,
-            direction: d,
+            origin: o.clone(),
+            direction: d.clone(),
         }
     }
 
-    fn origin(&self) -> &Vec3 {
+    pub fn origin(&self) -> &Vec3 {
         &self.origin
     }
 
-    fn direction(&self) -> &Vec3 {
+    pub fn direction(&self) -> &Vec3 {
         &self.direction
+    }
+
+    pub fn position(&self, t: f32) -> Vec3 {
+        *self.origin() + *self.direction() * t
     }
 }

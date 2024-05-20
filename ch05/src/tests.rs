@@ -1,14 +1,146 @@
 #[cfg(test)]
-mod tests {
-    use super::*;
+mod ray_tests {
+    extern crate nalgebra_glm as glm;
+    use glm::Vec3;
+
+    use crate::ray;
+    use ray::Ray;
 
     #[test]
-    fn create_a_ray() {
-        todo!();
+    fn build_ray_origin_same() {
+        let origin_vec = glm::vec3(1.0, 2.0, 3.0);
+        let direction_vec = glm::vec3(4.0, 5.0, 6.0);
+
+        let r = Ray::build(&origin_vec, &direction_vec);
+
+        assert_eq!(
+            glm::vec3(true, true, true),
+            glm::equal(&r.origin(), &origin_vec)
+        );
+    }
+
+    #[test]
+    fn build_ray_origin_diff_x() {
+        let origin_vec = glm::vec3(1.0, 2.0, 3.0);
+        let direction_vec = glm::vec3(4.0, 5.0, 6.0);
+
+        let r = Ray::build(&origin_vec, &direction_vec);
+
+        assert_eq!(
+            glm::vec3(false, true, true),
+            glm::equal(&r.origin(), &glm::vec3(0.0, 2.0, 3.0))
+        );
+    }
+
+    #[test]
+    fn build_ray_origin_diff_y() {
+        let origin_vec = glm::vec3(1.0, 2.0, 3.0);
+        let direction_vec = glm::vec3(4.0, 5.0, 6.0);
+
+        let r = Ray::build(&origin_vec, &direction_vec);
+
+        assert_eq!(
+            glm::vec3(true, false, true),
+            glm::equal(&r.origin(), &glm::vec3(1.0, 0.0, 3.0))
+        );
+    }
+
+    #[test]
+    fn build_ray_origin_diff_z() {
+        let origin_vec = glm::vec3(1.0, 2.0, 3.0);
+        let direction_vec = glm::vec3(4.0, 5.0, 6.0);
+
+        let r = Ray::build(&origin_vec, &direction_vec);
+
+        assert_eq!(
+            glm::vec3(true, true, false),
+            glm::equal(&r.origin(), &glm::vec3(1.0, 2.0, 0.0))
+        );
+    }
+
+    #[test]
+    fn build_ray_direction_same() {
+        let origin_vec = glm::vec3(1.0, 2.0, 3.0);
+        let direction_vec = glm::vec3(4.0, 5.0, 6.0);
+
+        let r = Ray::build(&origin_vec, &direction_vec);
+
+        assert_eq!(
+            glm::vec3(true, true, true),
+            glm::equal(&r.direction(), &&direction_vec)
+        );
+    }
+
+    #[test]
+    fn build_ray_direction_diff_x() {
+        let origin_vec = glm::vec3(1.0, 2.0, 3.0);
+        let direction_vec = glm::vec3(4.0, 5.0, 6.0);
+
+        let r = Ray::build(&origin_vec, &direction_vec);
+
+        assert_eq!(
+            glm::vec3(false, true, true),
+            glm::equal(&r.direction(), &glm::vec3(0.0, 5.0, 6.0))
+        );
+    }
+
+    #[test]
+    fn build_ray_direction_diff_y() {
+        let origin_vec = glm::vec3(1.0, 2.0, 3.0);
+        let direction_vec = glm::vec3(4.0, 5.0, 6.0);
+
+        let r = Ray::build(&origin_vec, &direction_vec);
+
+        assert_eq!(
+            glm::vec3(true, false, true),
+            glm::equal(&r.direction(), &glm::vec3(4.0, 0.0, 6.0))
+        );
+    }
+
+    #[test]
+    fn build_ray_direction_diff_z() {
+        let origin_vec = glm::vec3(1.0, 2.0, 3.0);
+        let direction_vec = glm::vec3(4.0, 5.0, 6.0);
+
+        let r = Ray::build(&origin_vec, &direction_vec);
+
+        assert_eq!(
+            glm::vec3(true, true, false),
+            glm::equal(&r.direction(), &glm::vec3(4.0, 5.0, 0.0))
+        );
     }
 
     #[test]
     fn distance_along_ray() {
-        todo!();
+        let origin_vec = glm::vec3(2.0, 3.0, 4.0);
+        let direction_vec = glm::vec3(1.0, 0.0, 0.0);
+
+        let r = Ray::build(&origin_vec, &direction_vec);
+        let t1: f32 = 0.0;
+        let t2: f32 = 1.0;
+        let t3: f32 = -1.0;
+        let t4: f32 = 2.5;
+
+        let dist1: Vec3 = r.position(t1);
+        let dist2: Vec3 = r.position(t2);
+        let dist3: Vec3 = r.position(t3);
+        let dist4: Vec3 = r.position(t4);
+
+        assert_eq!(
+            glm::vec3(true, true, true),
+            glm::equal(&dist1, &glm::vec3(2.0, 3.0, 4.0))
+        );
+        assert_eq!(
+            glm::vec3(true, true, true),
+            glm::equal(&dist2, &glm::vec3(3.0, 3.0, 4.0))
+        );
+        assert_eq!(
+            glm::vec3(true, true, true),
+            glm::equal(&dist3, &glm::vec3(1.0, 3.0, 4.0))
+        );
+        assert_eq!(
+            glm::vec3(true, true, true),
+            glm::equal(&dist4, &glm::vec3(4.5, 3.0, 4.0))
+        );
     }
 }
