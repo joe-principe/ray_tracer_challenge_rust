@@ -3,8 +3,7 @@ mod ray_tests {
     extern crate nalgebra_glm as glm;
     use glm::Vec3;
 
-    use crate::ray;
-    use ray::Ray;
+    use crate::ray::Ray;
 
     #[test]
     fn build_ray_origin_same() {
@@ -142,5 +141,70 @@ mod ray_tests {
             glm::vec3(true, true, true),
             glm::equal(&dist4, &glm::vec3(4.5, 3.0, 4.0))
         );
+    }
+}
+
+#[cfg(test)]
+mod ray_sphere_tests {
+    extern crate nalgebra_glm as glm;
+
+    use crate::ray::Ray;
+
+    #[test]
+    fn ray_sphere_two_hit() {
+        let r = Ray::build(&glm::vec3(0.0, 0.0, -5.0), &glm::vec3(0.0, 0.0, 1.0));
+        let s = Sphere::new();
+
+        let xs: Vec<f32> = intersect(s, r);
+
+        assert_eq!(xs.len(), 2);
+        float_cmp::assert_approx_eq!(f32, xs[0], 4.0);
+        float_cmp::assert_approx_eq!(f32, xs[1], 6.0);
+    }
+
+    #[test]
+    fn ray_sphere_one_hit() {
+        let r = Ray::build(&glm::vec3(0.0, 1.0, -5.0), &glm::vec3(0.0, 0.0, 1.0));
+        let s = Sphere::new();
+
+        let xs: Vec<f32> = intersect(s, r);
+
+        assert_eq!(xs.len(), 2);
+        float_cmp::assert_approx_eq!(f32, xs[0], 5.0);
+        float_cmp::assert_approx_eq!(f32, xs[1], 5.0);
+    }
+
+    #[test]
+    fn ray_sphere_miss() {
+        let r = Ray::build(&glm::vec3(0.0, 2.0, -5.0), &glm::vec3(0.0, 0.0, 1.0));
+        let s = Sphere::new();
+
+        let xs: Vec<f32> = intersect(s, r);
+
+        assert_eq!(xs.len(), 0);
+    }
+
+    #[test]
+    fn ray_sphere_inside() {
+        let r = Ray::build(&glm::vec3(0.0, 0.0, 0.0), &glm::vec3(0.0, 0.0, 1.0));
+        let s = Sphere::new();
+
+        let xs: Vec<f32> = intersect(s, r);
+
+        assert_eq!(xs.len(), 2);
+        float_cmp::assert_approx_eq!(f32, xs[0], -1.0);
+        float_cmp::assert_approx_eq!(f32, xs[1], 1.0);
+    }
+
+    #[test]
+    fn ray_sphere_behind() {
+        let r = Ray::build(&glm::vec3(0.0, 0.0, 5.0), &glm::vec3(0.0, 0.0, 1.0));
+        let s = Sphere::new();
+
+        let xs: Vec<f32> = intersect(s, r);
+
+        assert_eq!(xs.len(), 2);
+        float_cmp::assert_approx_eq!(f32, xs[0], -6.0);
+        float_cmp::assert_approx_eq!(f32, xs[1], -4.0);
     }
 }
