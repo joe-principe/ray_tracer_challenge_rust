@@ -1,4 +1,5 @@
 mod ray;
+mod sphere;
 mod tests;
 
 use minifb::{Key, Window, WindowOptions};

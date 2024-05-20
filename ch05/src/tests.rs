@@ -149,13 +149,14 @@ mod ray_sphere_tests {
     extern crate nalgebra_glm as glm;
 
     use crate::ray::Ray;
+    use crate::sphere::Sphere;
 
     #[test]
     fn ray_sphere_two_hit() {
         let r = Ray::build(&glm::vec3(0.0, 0.0, -5.0), &glm::vec3(0.0, 0.0, 1.0));
         let s = Sphere::new();
 
-        let xs: Vec<f32> = intersect(s, r);
+        let xs: Vec<f32> = s.intersect(&r);
 
         assert_eq!(xs.len(), 2);
         float_cmp::assert_approx_eq!(f32, xs[0], 4.0);
@@ -167,7 +168,7 @@ mod ray_sphere_tests {
         let r = Ray::build(&glm::vec3(0.0, 1.0, -5.0), &glm::vec3(0.0, 0.0, 1.0));
         let s = Sphere::new();
 
-        let xs: Vec<f32> = intersect(s, r);
+        let xs: Vec<f32> = s.intersect(&r);
 
         assert_eq!(xs.len(), 2);
         float_cmp::assert_approx_eq!(f32, xs[0], 5.0);
@@ -179,7 +180,7 @@ mod ray_sphere_tests {
         let r = Ray::build(&glm::vec3(0.0, 2.0, -5.0), &glm::vec3(0.0, 0.0, 1.0));
         let s = Sphere::new();
 
-        let xs: Vec<f32> = intersect(s, r);
+        let xs: Vec<f32> = s.intersect(&r);
 
         assert_eq!(xs.len(), 0);
     }
@@ -189,7 +190,7 @@ mod ray_sphere_tests {
         let r = Ray::build(&glm::vec3(0.0, 0.0, 0.0), &glm::vec3(0.0, 0.0, 1.0));
         let s = Sphere::new();
 
-        let xs: Vec<f32> = intersect(s, r);
+        let xs: Vec<f32> = s.intersect(&r);
 
         assert_eq!(xs.len(), 2);
         float_cmp::assert_approx_eq!(f32, xs[0], -1.0);
@@ -201,7 +202,7 @@ mod ray_sphere_tests {
         let r = Ray::build(&glm::vec3(0.0, 0.0, 5.0), &glm::vec3(0.0, 0.0, 1.0));
         let s = Sphere::new();
 
-        let xs: Vec<f32> = intersect(s, r);
+        let xs: Vec<f32> = s.intersect(&r);
 
         assert_eq!(xs.len(), 2);
         float_cmp::assert_approx_eq!(f32, xs[0], -6.0);
