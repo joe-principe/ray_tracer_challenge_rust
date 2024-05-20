@@ -1,7 +1,7 @@
 extern crate nalgebra_glm as glm;
+use glm::Vec3;
 
 use crate::ray::Ray;
-use glm::Vec3;
 
 pub struct Sphere {
     origin: Vec3,

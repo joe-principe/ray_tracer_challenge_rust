@@ -1,6 +1,6 @@
+mod tests;
 mod ray;
 mod sphere;
-mod tests;
 
 use minifb::{Key, Window, WindowOptions};
 extern crate nalgebra_glm as glm;
