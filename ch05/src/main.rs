@@ -1,6 +1,8 @@
 mod tests;
 mod ray;
 mod sphere;
+mod intersection;
+mod hittable;
 
 use minifb::{Key, Window, WindowOptions};
 extern crate nalgebra_glm as glm;

@@ -6,6 +6,7 @@ pub struct Ray {
     direction: Vec3,
 }
 
+#[allow(dead_code)]
 impl Ray {
     pub fn new() -> Ray {
         Ray {
@@ -30,6 +31,6 @@ impl Ray {
     }
 
     pub fn position(&self, t: f32) -> Vec3 {
-        *self.origin() + *self.direction() * t
+        self.origin() + self.direction() * t
     }
 }
